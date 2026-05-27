@@ -5,8 +5,6 @@ import type { Rule, RuleContext } from '../engine.js'
 import { getHotFiles, getFileCommitCount } from '../git/history.js'
 import { isExcluded } from '../util/exclude.js'
 
-const STALENESS_RATIO = 5
-
 function findTestFile(repoRoot: string, sourceFile: string): string | null {
   const dir = path.dirname(sourceFile)
   const base = path.basename(sourceFile)
@@ -47,7 +45,7 @@ function findTestFile(repoRoot: string, sourceFile: string): string | null {
 
 export const caTest002: Rule = {
   id: 'CA-TEST002',
-  description: 'Hot file changed much more frequently than its test — test may be stale.',
+  description: 'Hot file was changed recently but its test file was not touched in the same window.',
   defaultSeverity: 'warn',
   applicableModes: ['history'],
 
@@ -64,13 +62,12 @@ export const caTest002: Rule = {
       if (!testFile) continue  // CA-TEST001 handles missing tests
 
       const testCommits = getFileCommitCount(ctx.repoRoot, testFile, since)
-      if (testCommits === 0 || commitCount >= STALENESS_RATIO * testCommits) {
+      if (testCommits === 0) {
         findings.push({
           ruleId: 'CA-TEST002',
           severity: 'warn',
           file: filePath,
-          message: `Source changed ${commitCount}x but test (${testFile}) changed only ${testCommits}x in the last ${since}.`,
-          detail: `Ratio ${commitCount}:${testCommits} exceeds the ${STALENESS_RATIO}:1 threshold — test coverage may be stale.`,
+          message: `Source changed ${commitCount}x but test (${testFile}) was not touched in the last ${since}.`,
           fix: `Review and update ${testFile} to match recent changes.`,
         })
       }

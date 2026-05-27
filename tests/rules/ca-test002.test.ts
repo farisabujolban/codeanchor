@@ -38,9 +38,12 @@ describe('CA-TEST002', () => {
   beforeEach(() => { tmpDir = makeTempGitRepo() })
   afterEach(() => { fs.rmSync(tmpDir, { recursive: true, force: true }) })
 
-  it('finds a finding when source is changed 8x but test only 1x', async () => {
-    writeAndCommit(tmpDir, 'src/api.test.ts', `test('base', () => {})`, 'initial test')
-    for (let i = 0; i < 8; i++) {
+  it('flags hot source whose test file was never committed', async () => {
+    // Test file exists on disk but was never committed — 0 commits in window
+    const testFile = path.join(tmpDir, 'src', 'api.test.ts')
+    fs.mkdirSync(path.join(tmpDir, 'src'), { recursive: true })
+    fs.writeFileSync(testFile, `test('base', () => {})`, 'utf-8')
+    for (let i = 0; i < 3; i++) {
       writeAndCommit(tmpDir, 'src/api.ts', `export const v = ${i}`, `src change ${i}`)
     }
     const findings = await caTest002.run(makeCtx(tmpDir))
@@ -49,11 +52,11 @@ describe('CA-TEST002', () => {
     expect(findings[0].file).toBe('src/api.ts')
   })
 
-  it('finds no finding when source and test have comparable commit counts', async () => {
-    for (let i = 0; i < 4; i++) {
+  it('finds no finding when test file has at least one commit in the window', async () => {
+    for (let i = 0; i < 3; i++) {
       writeAndCommit(tmpDir, 'src/api.ts', `export const v = ${i}`, `src ${i}`)
-      writeAndCommit(tmpDir, 'src/api.test.ts', `test('v${i}', () => {})`, `test ${i}`)
     }
+    writeAndCommit(tmpDir, 'src/api.test.ts', `test('v', () => {})`, 'add test')
     const findings = await caTest002.run(makeCtx(tmpDir))
     expect(findings.filter(f => f.file === 'src/api.ts')).toHaveLength(0)
   })

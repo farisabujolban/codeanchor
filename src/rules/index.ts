@@ -7,7 +7,6 @@ import { caCi002 } from './ca-ci002.js'
 import { caCi003 } from './ca-ci003.js'
 import { caDocker001 } from './ca-docker001.js'
 import { caDocker002 } from './ca-docker002.js'
-import { caDocker003 } from './ca-docker003.js'
 import { caPkg001 } from './ca-pkg001.js'
 import { caPkg002 } from './ca-pkg002.js'
 import { caLock001 } from './ca-lock001.js'
@@ -30,7 +29,6 @@ export const allRules: Rule[] = [
   caCi003,
   caDocker001,
   caDocker002,
-  caDocker003,
   caPkg001,
   caPkg002,
   caLock001,
