@@ -52,7 +52,7 @@ describe('CA-TEST001', () => {
     for (let i = 0; i < 5; i++) {
       writeAndCommit(tmpDir, 'src/api.ts', `export const v = ${i}`, `change ${i}`)
     }
-    writeAndCommit(tmpDir, 'src/api.test.ts', `test('ok', () => {})`, 'add test')
+    writeAndCommit(tmpDir, 'src/api.test.ts', `test('ok', () => { expect(1).toBe(1) })`, 'add test')
     const findings = await caTest001.run(makeCtx(tmpDir))
     expect(findings.filter(f => f.file === 'src/api.ts')).toHaveLength(0)
   })
@@ -76,7 +76,7 @@ describe('CA-TEST001', () => {
     for (let i = 0; i < 4; i++) {
       writeAndCommit(tmpDir, 'src/utils.py', `x = ${i}`, `py change ${i}`)
     }
-    writeAndCommit(tmpDir, 'src/test_utils.py', 'def test_x(): pass', 'add py test')
+    writeAndCommit(tmpDir, 'src/test_utils.py', 'def test_x():\n    assert 1 == 1', 'add py test')
     const findings = await caTest001.run(makeCtx(tmpDir))
     expect(findings.filter(f => f.file === 'src/utils.py')).toHaveLength(0)
   })

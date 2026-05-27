@@ -5,6 +5,8 @@ import type { Rule, RuleContext } from '../engine.js'
 import { getHotFiles } from '../git/history.js'
 import { isExcluded } from '../util/exclude.js'
 
+const HAS_ASSERTION_RE = /\bexpect\s*\(|\bassert[\s.(]/
+
 // Returns the test file path if it exists, null otherwise
 function findTestFile(repoRoot: string, sourceFile: string): string | null {
   const dir = path.dirname(sourceFile)
@@ -61,7 +63,8 @@ export const caTest001: Rule = {
     for (const { path: filePath, commitCount } of hotFiles) {
       if (isExcluded(filePath, ctx.config.exclude)) continue
       if (!fs.existsSync(path.join(ctx.repoRoot, filePath))) continue
-      if (findTestFile(ctx.repoRoot, filePath) === null) {
+      const testFile = findTestFile(ctx.repoRoot, filePath)
+      if (testFile === null) {
         findings.push({
           ruleId: 'CA-TEST001',
           severity: 'warn',
@@ -69,6 +72,19 @@ export const caTest001: Rule = {
           message: `Hot file changed ${commitCount} times in the last ${since} has no associated test.`,
           fix: `Add a test file for ${path.basename(filePath)}.`,
         })
+      } else {
+        let testContent = ''
+        try { testContent = fs.readFileSync(path.join(ctx.repoRoot, testFile), 'utf-8') }
+        catch { /* skip assertion check if unreadable */ }
+        if (testContent && !HAS_ASSERTION_RE.test(testContent)) {
+          findings.push({
+            ruleId: 'CA-TEST001',
+            severity: 'warn',
+            file: filePath,
+            message: `Test file ${testFile} exists but contains no assertions — may be empty boilerplate.`,
+            fix: `Add assertions to ${testFile}.`,
+          })
+        }
       }
     }
     return findings

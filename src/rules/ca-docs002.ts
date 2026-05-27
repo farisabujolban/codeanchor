@@ -4,20 +4,22 @@ import type { Finding } from '../types.js'
 import type { Rule, RuleContext } from '../engine.js'
 import { isExcluded } from '../util/exclude.js'
 
-function walkMd(dir: string, results: string[]): void {
+function walkDocFiles(dir: string, results: string[]): void {
   if (!fs.existsSync(dir)) return
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name)
-    if (entry.isDirectory()) walkMd(full, results)
-    else if (entry.name.endsWith('.md')) results.push(full)
+    if (entry.isDirectory()) walkDocFiles(full, results)
+    else if (entry.name.endsWith('.md') || entry.name.endsWith('.mdx')) results.push(full)
   }
 }
 
 function findDocFiles(root: string): string[] {
   const files: string[] = []
-  const readme = path.join(root, 'README.md')
-  if (fs.existsSync(readme)) files.push(readme)
-  walkMd(path.join(root, 'docs'), files)
+  for (const name of ['README.md', 'CONTRIBUTING.md']) {
+    const p = path.join(root, name)
+    if (fs.existsSync(p)) files.push(p)
+  }
+  walkDocFiles(path.join(root, 'docs'), files)
   return files
 }
 

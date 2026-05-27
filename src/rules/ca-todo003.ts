@@ -29,13 +29,44 @@ function findSourceFiles(repoRoot: string): string[] {
   })
 }
 
+const FIXME_RE = /\bFIXME\b/
+
+function scanStagedFIXME(ctx: RuleContext): Finding[] {
+  const findings: Finding[] = []
+  if (!ctx.stagedDiffs) return findings
+  for (const fileDiff of ctx.stagedDiffs) {
+    if (fileDiff.status === 'deleted') continue
+    if (!SOURCE_EXTENSIONS.has(path.extname(fileDiff.path))) continue
+    const absPath = path.join(ctx.repoRoot, fileDiff.path)
+    if (!fs.existsSync(absPath)) continue
+    let lines: string[]
+    try { lines = fs.readFileSync(absPath, 'utf-8').split('\n') }
+    catch { continue }
+    for (const lineNum of fileDiff.changedLines) {
+      const line = lines[lineNum - 1]
+      if (line && FIXME_RE.test(line)) {
+        findings.push({
+          ruleId: 'CA-TODO003',
+          severity: 'warn',
+          file: fileDiff.path,
+          line: lineNum,
+          message: 'FIXME comment in staged change — resolve before merging.',
+        })
+      }
+    }
+  }
+  return findings
+}
+
 export const caTodo003: Rule = {
   id: 'CA-TODO003',
-  description: 'TODO/FIXME/HACK comment is older than 90 days and has no issue link.',
+  description: 'TODO/FIXME/HACK comment is older than 90 days and has no issue link. In staged mode: flags any FIXME regardless of age.',
   defaultSeverity: 'warn',
-  applicableModes: ['history'],
+  applicableModes: ['history', 'staged'],
 
   async run(ctx: RuleContext): Promise<Finding[]> {
+    if (ctx.mode === 'staged') return scanStagedFIXME(ctx)
+
     const maxAgeDays = 90
     const maxAgeSeconds = maxAgeDays * SECONDS_PER_DAY
     const now = Date.now() / 1000
