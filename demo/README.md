@@ -1,6 +1,6 @@
 # Demo App
 
-This is an intentionally broken demo repo used to showcase `repo-drift` rules.
+This is an intentionally broken demo repo used to showcase `codeanchor` rules.
 
 ## Getting started
 
