@@ -39,6 +39,7 @@ import { caPlan001 } from './ca-plan001.js'
 import { caPublish001 } from './ca-publish001.js'
 import { caDocker005 } from './ca-docker005.js'
 import { caEnv003 } from './ca-env003.js'
+import { caPkg004 } from './ca-pkg004.js'
 import type { Rule } from '../engine.js'
 
 export const allRules: Rule[] = [
@@ -83,4 +84,5 @@ export const allRules: Rule[] = [
   caPublish001,
   caDocker005,
   caEnv003,
+  caPkg004,
 ]
