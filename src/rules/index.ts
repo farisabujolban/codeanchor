@@ -26,6 +26,7 @@ import { caChangelog001 } from './ca-changelog001.js'
 import { caMigration001 } from './ca-migration001.js'
 import { caDocker003 } from './ca-docker003.js'
 import { caMono001 } from './ca-mono001.js'
+import { caCompose001 } from './ca-compose001.js'
 import type { Rule } from '../engine.js'
 
 export const allRules: Rule[] = [
@@ -57,4 +58,5 @@ export const allRules: Rule[] = [
   caMigration001,
   caDocker003,
   caMono001,
+  caCompose001,
 ]
