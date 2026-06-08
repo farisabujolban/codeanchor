@@ -97,7 +97,7 @@ export const caCompose001: Rule = {
             if (typeof vol !== 'string') continue
             const volName = vol.split(':')[0]
             if (volName.startsWith('.') || volName.startsWith('/') || volName.startsWith('~')) continue
-            if (definedVolumes.size > 0 && !definedVolumes.has(volName)) {
+            if (!definedVolumes.has(volName)) {
               findings.push({
                 ruleId: 'CA-COMPOSE001',
                 severity: 'error',
@@ -114,7 +114,7 @@ export const caCompose001: Rule = {
         if (svc.networks) {
           const nets = Array.isArray(svc.networks) ? svc.networks : Object.keys(svc.networks)
           for (const net of nets) {
-            if (definedNetworks.size > 0 && !definedNetworks.has(net)) {
+            if (!definedNetworks.has(net)) {
               findings.push({
                 ruleId: 'CA-COMPOSE001',
                 severity: 'error',
