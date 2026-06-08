@@ -30,6 +30,7 @@ const DEFAULTS: CodeAnchorConfig = {
     'CA-OWN001':    { severity: 'warn' },
     'CA-TODO003':   { severity: 'warn' },
     'ISO-MAI002':   { severity: 'warn' },
+    'ISO-REL001':   { severity: 'warn' },
   },
 }
 
