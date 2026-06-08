@@ -29,14 +29,26 @@ function findWorkflowFiles(root: string): string[] {
     .map(f => path.join(dir, f))
 }
 
-const scriptPattern = /(?:npm run|pnpm run|yarn run|pnpm|yarn)\s+([a-zA-Z0-9:_-]+)/g
+const scriptPattern = /(npm run|pnpm run|yarn run|pnpm|yarn)\s+([a-zA-Z0-9:_-]+)/g
+
+// Built-in pnpm/yarn commands that are NOT script references
+const YARN_PNPM_BUILTINS = new Set([
+  'install', 'add', 'remove', 'uninstall', 'upgrade', 'update', 'link', 'unlink',
+  'import', 'cache', 'config', 'init', 'global', 'publish', 'pack', 'workspaces',
+  'workspace', 'version', 'info', 'why', 'list', 'outdated', 'audit', 'create',
+  'dlx', 'exec', 'store', 'prune', 'fetch', 'env', 'dedupe', 'check', 'rebuild',
+  'approve', 'ignore', 'set',
+])
 
 function extractScriptNames(runBlock: string): string[] {
   const names: string[] = []
   scriptPattern.lastIndex = 0
   let m: RegExpExecArray | null
   while ((m = scriptPattern.exec(runBlock)) !== null) {
-    names.push(m[1])
+    const isRunForm = m[1].includes('run')
+    const scriptName = m[2]
+    if (!isRunForm && YARN_PNPM_BUILTINS.has(scriptName)) continue
+    names.push(scriptName)
   }
   return names
 }
