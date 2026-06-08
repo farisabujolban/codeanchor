@@ -5,14 +5,26 @@ import type { Rule, RuleContext } from '../engine.js'
 import { isExcluded } from '../util/exclude.js'
 
 // Matches: npm run X, yarn run X, pnpm run X, yarn X, pnpm X (bare sub-command)
-const SCRIPT_CALL_RE = /(?:npm run|pnpm run|yarn run|pnpm|yarn)\s+([a-zA-Z0-9:_-]+)/g
+const SCRIPT_CALL_RE = /(npm run|pnpm run|yarn run|pnpm|yarn)\s+([a-zA-Z0-9:_-]+)/g
+
+// Built-in pnpm/yarn commands that are NOT script references
+const YARN_PNPM_BUILTINS = new Set([
+  'install', 'add', 'remove', 'uninstall', 'upgrade', 'update', 'link', 'unlink',
+  'import', 'cache', 'config', 'init', 'global', 'publish', 'pack', 'workspaces',
+  'workspace', 'version', 'info', 'why', 'list', 'outdated', 'audit', 'create',
+  'dlx', 'exec', 'store', 'prune', 'fetch', 'env', 'dedupe', 'check', 'rebuild',
+  'approve', 'ignore', 'set',
+])
 
 function extractCalledScripts(scriptValue: string): string[] {
   const names: string[] = []
   SCRIPT_CALL_RE.lastIndex = 0
   let m: RegExpExecArray | null
   while ((m = SCRIPT_CALL_RE.exec(scriptValue)) !== null) {
-    names.push(m[1])
+    const isRunForm = m[1].includes('run')
+    const scriptName = m[2]
+    if (!isRunForm && YARN_PNPM_BUILTINS.has(scriptName)) continue
+    names.push(scriptName)
   }
   return names
 }
