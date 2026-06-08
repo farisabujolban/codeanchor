@@ -5,12 +5,16 @@ import type { Finding } from '../types.js'
 import type { Rule, RuleContext } from '../engine.js'
 import { isExcluded } from '../util/exclude.js'
 
+// Match filenames where "plan" or "planning" appears as a whole word
+// (preceded/followed by start-of-name, dash, underscore, dot, or end-of-name).
+const PLAN_FILENAME_RE = /(?:^|[-_.])(plans?|planning)(?:[-_.]|$)/i
+
 function walkMd(dir: string, results: string[]): void {
   if (!fs.existsSync(dir)) return
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name)
     if (entry.isDirectory()) walkMd(full, results)
-    else if (entry.name.endsWith('.md') && entry.name.toLowerCase().includes('plan')) {
+    else if (entry.name.endsWith('.md') && PLAN_FILENAME_RE.test(entry.name)) {
       results.push(full)
     }
   }
