@@ -5,7 +5,7 @@ import type { Rule, RuleContext } from '../engine.js'
 import { getHotFiles } from '../git/history.js'
 import { isExcluded } from '../util/exclude.js'
 
-const HAS_ASSERTION_RE = /\bexpect\s*\(|\bassert[\s.(]/
+const HAS_ASSERTION_RE = /\bexpect\s*\(|\bassert[\s.(]|\brequire\.|\bt\.(Error|Fatal|Fail)/
 
 // Returns the test file path if it exists, null otherwise
 function findTestFile(repoRoot: string, sourceFile: string): string | null {
@@ -28,8 +28,12 @@ function findTestFile(repoRoot: string, sourceFile: string): string | null {
       path.join(dir, `${stem}Test.java`),
       path.join(dir, `${stem}Spec.java`),
     )
+  } else if (ext === '.go') {
+    candidates.push(
+      path.join(dir, `${stem}_test.go`),
+    )
   } else {
-    // JS/TS/Go/C/C++/C#
+    // JS/TS/C/C++/C#
     candidates.push(
       path.join(dir, `${stem}.test${ext}`),
       path.join(dir, `${stem}.spec${ext}`),
