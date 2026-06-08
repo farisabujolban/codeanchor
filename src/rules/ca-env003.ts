@@ -74,7 +74,8 @@ export const caEnv003: Rule = {
     if (envFiles.length === 0) return []
 
     const patterns = readGitignorePatterns(ctx.repoRoot)
-    if (patterns.length === 0) return []
+    // No early return when patterns is empty — an absent or empty .gitignore means
+    // NOTHING is ignored, so every .env file is at risk and should be flagged.
 
     const findings: Finding[] = []
     for (const file of envFiles) {
