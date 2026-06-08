@@ -8,12 +8,20 @@ function findDockerfiles(root: string): string[] {
   const files: string[] = []
   try {
     for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
-      if (
-        entry.isFile() &&
-        (entry.name === 'Dockerfile' || entry.name.startsWith('Dockerfile.'))
-      ) {
+      if (entry.isFile() && (entry.name === 'Dockerfile' || entry.name.startsWith('Dockerfile.'))) {
         files.push(path.join(root, entry.name))
       }
+    }
+    for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue
+      const subDir = path.join(root, entry.name)
+      try {
+        for (const sub of fs.readdirSync(subDir, { withFileTypes: true })) {
+          if (sub.isFile() && (sub.name === 'Dockerfile' || sub.name.startsWith('Dockerfile.'))) {
+            files.push(path.join(subDir, sub.name))
+          }
+        }
+      } catch { /* ignore */ }
     }
   } catch { /* ignore unreadable root */ }
   return files
