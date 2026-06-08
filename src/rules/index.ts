@@ -42,6 +42,7 @@ import { caEnv003 } from './ca-env003.js'
 import { caPkg004 } from './ca-pkg004.js'
 import { caCi005 } from './ca-ci005.js'
 import { caCompose002 } from './ca-compose002.js'
+import { isoMai001 } from './iso-mai001.js'
 import { isoMai002 } from './iso-mai002.js'
 import { isoRel001 } from './iso-rel001.js'
 import type { Rule } from '../engine.js'
@@ -91,6 +92,7 @@ export const allRules: Rule[] = [
   caPkg004,
   caCi005,
   caCompose002,
+  isoMai001,
   isoMai002,
   isoRel001,
 ]
