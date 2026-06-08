@@ -32,6 +32,7 @@ import { caConfig001 } from './ca-config001.js'
 import { caI18n001 } from './ca-i18n001.js'
 import { caFeat001 } from './ca-feat001.js'
 import { caMakefile001 } from './ca-makefile001.js'
+import { caExport001 } from './ca-export001.js'
 import type { Rule } from '../engine.js'
 
 export const allRules: Rule[] = [
@@ -69,4 +70,5 @@ export const allRules: Rule[] = [
   caI18n001,
   caFeat001,
   caMakefile001,
+  caExport001,
 ]
