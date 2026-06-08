@@ -25,6 +25,10 @@ function findTestFile(repoRoot: string, sourceFile: string): string | null {
       path.join(dir, `${stem}Test.java`),
       path.join(dir, `${stem}Spec.java`),
     )
+  } else if (ext === '.go') {
+    candidates.push(
+      path.join(dir, `${stem}_test.go`),
+    )
   } else {
     candidates.push(
       path.join(dir, `${stem}.test${ext}`),
