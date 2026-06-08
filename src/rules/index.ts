@@ -37,6 +37,7 @@ import { caOpenapi001 } from './ca-openapi001.js'
 import { caRoute001 } from './ca-route001.js'
 import { caPlan001 } from './ca-plan001.js'
 import { caPublish001 } from './ca-publish001.js'
+import { caDocker005 } from './ca-docker005.js'
 import type { Rule } from '../engine.js'
 
 export const allRules: Rule[] = [
@@ -79,4 +80,5 @@ export const allRules: Rule[] = [
   caRoute001,
   caPlan001,
   caPublish001,
+  caDocker005,
 ]
