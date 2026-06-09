@@ -11,5 +11,10 @@ export default tseslint.config(
         files: ['src/rules/**/*.ts'],
         rules: { 'codeanchor/no-sync-in-async': 'off' },
     },
+    {
+        // Test files intentionally call JSON.parse() on controlled input — no need to guard
+        files: ['tests/**/*.ts'],
+        rules: { 'codeanchor/no-unguarded-json-parse': 'off' },
+    },
     { ignores: ['dist/**', 'node_modules/**'] },
 );

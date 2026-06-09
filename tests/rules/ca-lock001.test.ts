@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { caLock001 } from '../../src/rules/ca-lock001.js';
-import type { RuleContext } from '../../src/engine.js';
+import type { RuleContext } from '../../src/types.js';
 import type { FileDiff } from '../../src/types.js';
 
 function makeTempDir(): string {
