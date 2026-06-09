@@ -1,40 +1,52 @@
 {
-  "name": "@farisabujolban/codeanchor",
-  "version": "0.1.0",
-  "description": "Deterministic tech-debt and workflow-drift CLI",
-  "type": "module",
-  "bin": {
-    "codeanchor": "dist/cli.js"
-  },
-  "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "prepublishOnly": "npm run build"
-  },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "git",
-    "cli",
-    "lint",
-    "stale",
-    "drift",
-    "workflow"
-  ],
-  "engines": {
-    "node": ">=18"
-  },
-  "dependencies": {
-    "commander": "^12.1.0",
-    "js-yaml": "^4.1.1"
-  },
-  "devDependencies": {
-    "@types/js-yaml": "^4.0.9",
-    "@types/node": "^20.0.0",
-    "typescript": "^5.4.0",
-    "vitest": "^1.6.0"
-  }
+    "name": "@farisabujolban/codeanchor",
+    "version": "0.1.0",
+    "description": "Deterministic tech-debt and workflow-drift CLI",
+    "type": "module",
+    "bin": {
+        "codeanchor": "dist/cli.js"
+    },
+    "scripts": {
+        "build": "tsc",
+        "dev": "tsc --watch",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "lint": "eslint . --max-warnings=0",
+        "lint:fix": "eslint . --fix --max-warnings=0",
+        "fmt": "prettier --write .",
+        "fmt:check": "prettier --check .",
+        "tc": "tsc --noEmit",
+        "prepare": "husky",
+        "prepublishOnly": "npm run build"
+    },
+    "files": [
+        "dist"
+    ],
+    "keywords": [
+        "git",
+        "cli",
+        "lint",
+        "stale",
+        "drift",
+        "workflow"
+    ],
+    "engines": {
+        "node": ">=18"
+    },
+    "dependencies": {
+        "commander": "^12.1.0",
+        "js-yaml": "^4.1.1"
+    },
+    "devDependencies": {
+        "@farisabujolban/eslint-plugin-codeanchor": "file:../eslint-plugin-codeanchor",
+        "@types/js-yaml": "^4.0.9",
+        "@types/node": "^20.0.0",
+        "eslint": "^9.0.0",
+        "husky": "^9.0.0",
+        "lint-staged": "^15.0.0",
+        "prettier": "^3.0.0",
+        "typescript": "^5.4.0",
+        "typescript-eslint": "^8.0.0",
+        "vitest": "^1.6.0"
+    }
 }
