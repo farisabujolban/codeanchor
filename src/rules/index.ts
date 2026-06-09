@@ -52,6 +52,7 @@ import { isoSec001 } from './iso-sec001.js';
 import { isoSec002 } from './iso-sec002.js';
 import { isoMai003 } from './iso-mai003.js';
 import { isoMai004 } from './iso-mai004.js';
+import { isoPor001 } from './iso-por001.js';
 import type { Rule } from '../types.js';
 
 export const allRules: Rule[] = [
@@ -109,4 +110,5 @@ export const allRules: Rule[] = [
     isoSec002,
     isoMai003,
     isoMai004,
+    isoPor001,
 ];
