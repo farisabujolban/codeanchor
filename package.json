@@ -2,6 +2,7 @@
     "name": "@farisabujolban/codeanchor",
     "version": "0.1.0",
     "description": "Deterministic tech-debt and workflow-drift CLI",
+    "license": "MIT",
     "type": "module",
     "bin": {
         "codeanchor": "dist/cli.js"
