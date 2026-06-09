@@ -17,11 +17,6 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - uses: actions/checkout@v4
-              with:
-                  repository: farisabujolban/eslint-plugin-codeanchor
-                  path: ../eslint-plugin-codeanchor
-
             - uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node-version }}
