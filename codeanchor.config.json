@@ -1,5 +1,17 @@
 {
-    "exclude": ["dist/**", "node_modules/**", "demo/**", "tests/**", "vitest.config.ts", "src/types.ts"],
+    "exclude": [
+        "dist/**",
+        "node_modules/**",
+        "demo/**",
+        "tests/**",
+        "vitest.config.ts",
+        "src/types.ts",
+        "src/util/language-driver.ts",
+        "eslint.config.mjs",
+        "lint-staged.config.mjs",
+        "prettier.config.mjs",
+        "src/cli.ts"
+    ],
     "rules": {
         "CA-CD001": false,
         "CA-CI001": false,
