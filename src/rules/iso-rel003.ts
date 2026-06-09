@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import type { Finding } from '../types.js';
-import type { Rule, RuleContext } from '../engine.js';
+import type { Rule, RuleContext } from '../types.js';
 import { isExcluded } from '../util/exclude.js';
 
 // Extensions where float equality comparisons are meaningful
@@ -21,7 +21,12 @@ const CSTYLE_EXTS = new Set([
     '.cc',
     '.cs',
 ]);
+const JS_TS_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs']);
 const PYTHON_EXTS = new Set(['.py']);
+
+function stripTemplateLiterals(src: string): string {
+    return src.replace(/`(?:[^`\\]|\\.)*`/gs, '``');
+}
 
 // Strip C-style line comment from a single line (preserves position length)
 function stripLineComment(line: string): string {
@@ -92,6 +97,7 @@ export const isoRel003: Rule = {
 
         for (const relPath of filePaths) {
             if (isExcluded(relPath, ctx.config.exclude)) continue;
+            if (/[./](test|spec)[./]|\.test\.|\.spec\.|__tests?__|__mocks?__/.test(relPath)) continue;
 
             const ext = path.extname(relPath);
             const isCStyle = CSTYLE_EXTS.has(ext);
@@ -106,6 +112,7 @@ export const isoRel003: Rule = {
                 continue;
             }
 
+            if (JS_TS_EXTS.has(ext)) content = stripTemplateLiterals(content);
             const lines = content.split('\n');
 
             for (let i = 0; i < lines.length; i++) {

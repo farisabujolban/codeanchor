@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import type { Finding } from '../types.js';
-import type { Rule, RuleContext } from '../engine.js';
+import type { Rule, RuleContext } from '../types.js';
 import { isExcluded } from '../util/exclude.js';
 
 const SOURCE_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.py', '.java']);
@@ -59,6 +59,10 @@ function testCandidates(relPath: string): string[] {
     }
 
     // JS/TS and variants
+    const parts = dir === '.' ? [] : dir.split('/');
+    // Mirror-tree under tests/ or test/ (replace first path segment with tests/test)
+    const testsDir = ['tests', ...parts.slice(1)].join('/');
+    const testDir = ['test', ...parts.slice(1)].join('/');
     return [
         `${prefix}${stem}.test${ext}`,
         `${prefix}${stem}.spec${ext}`,
@@ -67,6 +71,21 @@ function testCandidates(relPath: string): string[] {
         `${prefix}${stem}.test.js`,
         `${prefix}${stem}.spec.ts`,
         `${prefix}${stem}.spec.js`,
+        // Mirror-tree: tests/rules/foo.test.ts for src/rules/foo.ts
+        `${testsDir}/${stem}.test${ext}`,
+        `${testsDir}/${stem}.test.ts`,
+        `${testsDir}/${stem}.test.js`,
+        `${testsDir}/${stem}.spec${ext}`,
+        `${testDir}/${stem}.test${ext}`,
+        `${testDir}/${stem}.test.ts`,
+        `${testDir}/${stem}.test.js`,
+        // Flat: tests/foo.test.ts for src/rules/foo.ts (common in smaller repos)
+        `tests/${stem}.test${ext}`,
+        `tests/${stem}.test.ts`,
+        `tests/${stem}.test.js`,
+        `test/${stem}.test${ext}`,
+        `test/${stem}.test.ts`,
+        `test/${stem}.test.js`,
     ];
 }
 

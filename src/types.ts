@@ -1,55 +1,74 @@
-export type Severity = 'error' | 'warn' | 'info'
-export type ScanMode = 'staged' | 'repo' | 'pr' | 'history'
+import type { CodeAnchorConfig } from './config.js';
+
+export type Severity = 'error' | 'warn' | 'info';
+export type ScanMode = 'staged' | 'repo' | 'pr' | 'history';
+
+export interface RuleContext {
+    mode: ScanMode;
+    repoRoot: string;
+    config: CodeAnchorConfig;
+    stagedDiffs?: FileDiff[];
+    since?: string;
+    ruleIds?: string[];
+}
+
+export interface Rule {
+    id: string;
+    description: string;
+    defaultSeverity: Severity;
+    applicableModes: ScanMode[];
+    run(ctx: RuleContext): Promise<Finding[]>;
+}
 
 export interface Finding {
-  ruleId: string
-  severity: Severity
-  file: string
-  line?: number
-  message: string
-  fix?: string
-  detail?: string
+    ruleId: string;
+    severity: Severity;
+    file: string;
+    line?: number;
+    message: string;
+    fix?: string;
+    detail?: string;
 }
 
 export interface ScanResult {
-  mode: ScanMode
-  timestamp: string
-  repoRoot: string
-  findings: Finding[]
-  errorCount: number
-  warnCount: number
+    mode: ScanMode;
+    timestamp: string;
+    repoRoot: string;
+    findings: Finding[];
+    errorCount: number;
+    warnCount: number;
 }
 
-export type CommentType = 'line' | 'block'
+export type CommentType = 'line' | 'block';
 
 export interface Comment {
-  type: CommentType
-  text: string
-  startLine: number
-  endLine: number
-  ownedCodeStartLine: number
+    type: CommentType;
+    text: string;
+    startLine: number;
+    endLine: number;
+    ownedCodeStartLine: number;
 }
 
 export interface OwnedRegion {
-  startLine: number
-  endLine: number
+    startLine: number;
+    endLine: number;
 }
 
 export interface Approval {
-  file: string
-  commentLine: number
-  commentHash: string
-  codeHash: string
-  approvedAt: string
-  approvedBy: string
+    file: string;
+    commentLine: number;
+    commentHash: string;
+    codeHash: string;
+    approvedAt: string;
+    approvedBy: string;
 }
 
 export interface ApprovalsStore {
-  approvals: Approval[]
+    approvals: Approval[];
 }
 
 export interface FileDiff {
-  path: string
-  status: 'modified' | 'added' | 'deleted' | 'renamed'
-  changedLines: Set<number>
+    path: string;
+    status: 'modified' | 'added' | 'deleted' | 'renamed';
+    changedLines: Set<number>;
 }

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import type { Finding } from '../types.js';
-import type { Rule, RuleContext } from '../engine.js';
+import type { Rule, RuleContext } from '../types.js';
 import { isExcluded } from '../util/exclude.js';
 
 const JS_TS_EXTS = new Set(['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs']);
@@ -21,14 +21,14 @@ function sanitize(s: string): string {
     r = r.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
     // C-style line comments: // ...
     r = r.replace(/\/\/[^\n]*/g, (m) => ' '.repeat(m.length));
-    // Python # comments
-    r = r.replace(/#[^\n]*/g, (m) => ' '.repeat(m.length));
     // Template literals (simplified — no nested expressions)
     r = r.replace(/`[^`\\]*(?:\\.[^`\\]*)*`/g, (m) => m.replace(/[^\n]/g, ' '));
     // Double-quoted strings (no newlines)
     r = r.replace(/"(?:[^"\\]|\\.)*"/g, (m) => '"'.repeat(m.length));
     // Single-quoted strings (no newlines)
     r = r.replace(/'(?:[^'\\]|\\.)*'/g, (m) => "'".repeat(m.length));
+    // Python # comments — runs after strings so '#' inside JS/TS strings isn't misidentified
+    r = r.replace(/#[^\n]*/g, (m) => ' '.repeat(m.length));
     return r;
 }
 
@@ -211,8 +211,10 @@ function extractJavaMethods(san: string): FuncDef[] {
     // Method declarations: require at least one access/modifier keyword before name
     // public/private/protected/static/final/synchronized/abstract
     // Followed by return type(s) and then methodName(
+    // Rewritten without nested quantifiers: (?:X+)+ is ReDoS-prone.
+    // Use one required return-type token plus up to two optional extras (covers all real Java cases).
     const METHOD_RE =
-        /\b(?:(?:public|private|protected|static|final|synchronized|abstract)\s+)+(?:[\w<>\[\]]+\s+)+([a-zA-Z_$][\w$]*)\s*\(/g;
+        /\b(?:(?:public|private|protected|static|final|synchronized|abstract)\s+)+[\w<>\[\]]+\s+(?:[\w<>\[\]]+\s+)?(?:[\w<>\[\]]+\s+)?([a-zA-Z_$][\w$]*)\s*\(/g;
 
     let m: RegExpExecArray | null;
     METHOD_RE.lastIndex = 0;
