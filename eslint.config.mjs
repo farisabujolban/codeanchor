@@ -16,5 +16,5 @@ export default tseslint.config(
         files: ['tests/**/*.ts'],
         rules: { 'codeanchor/no-unguarded-json-parse': 'off' },
     },
-    { ignores: ['dist/**', 'node_modules/**'] },
+    { ignores: ['dist/**', 'node_modules/**', 'coverage/**'] },
 );
