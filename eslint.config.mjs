@@ -1,4 +1,3 @@
-// @ts-check
 import tseslint from 'typescript-eslint';
 import codeanchorPlugin from '@farisabujolban/eslint-plugin-codeanchor';
 
