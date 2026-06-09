@@ -46,6 +46,7 @@ import { isoMai001 } from './iso-mai001.js'
 import { isoMai002 } from './iso-mai002.js'
 import { isoRel001 } from './iso-rel001.js'
 import { isoRel002 } from './iso-rel002.js'
+import { isoRel003 } from './iso-rel003.js'
 import type { Rule } from '../engine.js'
 
 export const allRules: Rule[] = [
@@ -97,4 +98,5 @@ export const allRules: Rule[] = [
   isoMai002,
   isoRel001,
   isoRel002,
+  isoRel003,
 ]
