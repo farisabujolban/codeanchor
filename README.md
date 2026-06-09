@@ -1,5 +1,9 @@
 # codeanchor
 
+[![npm version](https://img.shields.io/npm/v/@farisabujolban/codeanchor)](https://www.npmjs.com/package/@farisabujolban/codeanchor)
+[![CI](https://img.shields.io/github/actions/workflow/status/farisabujolban/codeanchor/ci.yml?branch=main&label=CI)](https://github.com/farisabujolban/codeanchor/actions/workflows/ci.yml)
+[![license](https://img.shields.io/npm/l/@farisabujolban/codeanchor)](LICENSE)
+
 `codeanchor` catches the class of bugs that ESLint, Prettier, and type checkers cannot: broken references between your repo's moving parts. Docs that reference deleted scripts. CI workflows that call scripts that don't exist. Dockerfiles that COPY paths that were renamed. Comments that silently lie about the code beneath them.
 
 It does not replace any existing tool. It runs alongside them.
