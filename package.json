@@ -50,7 +50,7 @@
         "@farisabujolban/eslint-plugin-codeanchor": "^0.2.0",
         "@release-it/conventional-changelog": "^11.0.1",
         "@types/js-yaml": "^4.0.9",
-        "@types/node": "^22.0.0",
+        "@types/node": "^25.9.3",
         "@vitest/coverage-v8": "^4.1.8",
         "eslint": "^10.4.1",
         "husky": "^9.0.0",
