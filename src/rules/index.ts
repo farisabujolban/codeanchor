@@ -60,6 +60,7 @@ import { caLock002 } from './ca-lock002.js';
 import { caPkg006 } from './ca-pkg006.js';
 import { caEnv004 } from './ca-env004.js';
 import { caMigration003 } from './ca-migration003.js';
+import { caCi007 } from './ca-ci007.js';
 import type { Rule } from '../types.js';
 
 export const allRules: Rule[] = [
@@ -125,4 +126,5 @@ export const allRules: Rule[] = [
     caPkg006,
     caEnv004,
     caMigration003,
+    caCi007,
 ];
