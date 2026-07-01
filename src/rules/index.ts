@@ -53,6 +53,18 @@ import { isoSec002 } from './iso-sec002.js';
 import { isoMai003 } from './iso-mai003.js';
 import { isoMai004 } from './iso-mai004.js';
 import { isoPor001 } from './iso-por001.js';
+import { caPkg005 } from './ca-pkg005.js';
+import { caSupa001 } from './ca-supa001.js';
+import { caUrl001 } from './ca-url001.js';
+import { caLock002 } from './ca-lock002.js';
+import { caPkg006 } from './ca-pkg006.js';
+import { caEnv004 } from './ca-env004.js';
+import { caMigration003 } from './ca-migration003.js';
+import { caCi007 } from './ca-ci007.js';
+import { caCi006 } from './ca-ci006.js';
+import { caDocker008 } from './ca-docker008.js';
+import { caTsconfig003 } from './ca-tsconfig003.js';
+import { caOpenapi002 } from './ca-openapi002.js';
 import type { Rule } from '../types.js';
 
 export const allRules: Rule[] = [
@@ -111,4 +123,16 @@ export const allRules: Rule[] = [
     isoMai003,
     isoMai004,
     isoPor001,
+    caPkg005,
+    caSupa001,
+    caUrl001,
+    caLock002,
+    caPkg006,
+    caEnv004,
+    caMigration003,
+    caCi007,
+    caCi006,
+    caDocker008,
+    caTsconfig003,
+    caOpenapi002,
 ];
