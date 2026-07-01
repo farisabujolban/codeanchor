@@ -62,6 +62,7 @@ import { caEnv004 } from './ca-env004.js';
 import { caMigration003 } from './ca-migration003.js';
 import { caCi007 } from './ca-ci007.js';
 import { caCi006 } from './ca-ci006.js';
+import { caDocker008 } from './ca-docker008.js';
 import type { Rule } from '../types.js';
 
 export const allRules: Rule[] = [
@@ -129,4 +130,5 @@ export const allRules: Rule[] = [
     caMigration003,
     caCi007,
     caCi006,
+    caDocker008,
 ];
