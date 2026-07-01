@@ -64,6 +64,7 @@ import { caCi007 } from './ca-ci007.js';
 import { caCi006 } from './ca-ci006.js';
 import { caDocker008 } from './ca-docker008.js';
 import { caTsconfig003 } from './ca-tsconfig003.js';
+import { caOpenapi002 } from './ca-openapi002.js';
 import type { Rule } from '../types.js';
 
 export const allRules: Rule[] = [
@@ -133,4 +134,5 @@ export const allRules: Rule[] = [
     caCi006,
     caDocker008,
     caTsconfig003,
+    caOpenapi002,
 ];
