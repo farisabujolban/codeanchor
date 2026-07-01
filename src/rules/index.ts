@@ -55,6 +55,7 @@ import { isoMai004 } from './iso-mai004.js';
 import { isoPor001 } from './iso-por001.js';
 import { caPkg005 } from './ca-pkg005.js';
 import { caSupa001 } from './ca-supa001.js';
+import { caUrl001 } from './ca-url001.js';
 import type { Rule } from '../types.js';
 
 export const allRules: Rule[] = [
@@ -115,4 +116,5 @@ export const allRules: Rule[] = [
     isoPor001,
     caPkg005,
     caSupa001,
+    caUrl001,
 ];
