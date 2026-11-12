@@ -23,6 +23,7 @@ See [companion tools](docs/companion-tools.md) for workflow validation, link che
 - [Approvals (CA-CD001)](#approvals-ca-cd001)
 - [Exit codes](#exit-codes)
 - [Companion ESLint plugin](#companion-eslint-plugin)
+- [Suggested tools](#suggested-tools)
 - [Contributing](#contributing)
 
 ---
@@ -401,7 +402,15 @@ npm install --save-dev @farisabujolban/eslint-plugin-codeanchor
 
 ---
 
+## Suggested tools
+
+Pick the checks that fit your project. Use zizmor to audit GitHub Actions, Lychee to check Markdown links, and Redocly CLI to validate OpenAPI references. Use dependency-cruiser for JS/TS import cycles or Pylint for Python import cycles. Docker BuildKit and Compose can validate container configuration.
+
+Publint is useful if you publish npm packages. Gitleaks scans for secrets, and Vitest or Coverage.py can report test coverage. See the [companion tools and migration guide](docs/companion-tools.md) for links, rule IDs, and setup.
+
 ## Contributing
+
+Before adding a rule, check whether an existing tool already detects the same problem. If it does, link to its rule and the settings needed to use it in [companion tools](docs/companion-tools.md).
 
 ```bash
 git clone https://github.com/farisabujolban/codeanchor
