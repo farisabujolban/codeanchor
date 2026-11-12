@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Breaking: removed eight rules with replacements in zizmor, Docker, Lychee, Redocly CLI, dependency-cruiser, or Pylint. See the [migration guide](docs/companion-tools.md) for the rule IDs and replacement settings.
+
 ## [0.2.1](https://github.com/farisabujolban/codeanchor/compare/v0.2.0...v0.2.1) (2026-06-10)
 
 ### Bug Fixes

@@ -33,6 +33,8 @@ Patterns are matched against repo-relative file paths using standard glob syntax
 
 ## `rules`
 
+For removed rule IDs and what to run in their place, see [companion tools](companion-tools.md).
+
 A map of rule ID to rule config. Each entry is either:
 
 - An object `{ "severity": "error" | "warn" | "info" }` to override the default severity
@@ -101,11 +103,9 @@ How many lines below a comment it is considered to "own". When code changes with
     "rules": {
         "CA-CD001": { "severity": "error", "maxOwnershipDistance": 25 },
         "CA-CI001": { "severity": "error" },
-        "CA-CI004": false,
         "CA-DOCKER001": { "severity": "warn" },
         "CA-DOCKER003": false,
         "CA-DOCS001": { "severity": "error" },
-        "CA-DOCS002": { "severity": "error" },
         "CA-ENV001": { "severity": "warn" },
         "CA-LOCK001": { "severity": "error" },
         "CA-PKG001": { "severity": "error" },
@@ -114,7 +114,6 @@ How many lines below a comment it is considered to "own". When code changes with
         "CA-TEST001": { "severity": "warn" },
         "CA-OWN001": { "severity": "warn" },
         "CA-TODO003": { "severity": "warn" },
-        "ISO-MAI001": { "severity": "error" },
         "ISO-MAI002": { "threshold": 15 },
         "ISO-MAI003": false,
         "ISO-MAI004": false,

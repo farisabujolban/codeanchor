@@ -4,7 +4,9 @@
 [![CI](https://img.shields.io/github/actions/workflow/status/farisabujolban/codeanchor/ci.yml?branch=main&label=CI)](https://github.com/farisabujolban/codeanchor/actions/workflows/ci.yml)
 [![license](https://img.shields.io/npm/l/@farisabujolban/codeanchor)](LICENSE)
 
-`codeanchor` catches the class of bugs that ESLint, Prettier, and type checkers cannot: broken references between your repo's moving parts. Docs that reference deleted scripts. CI workflows that call scripts that don't exist. Dockerfiles that COPY paths that were renamed. Feature flags not declared in config. i18n keys used in code but missing from locale files. It runs alongside your existing tools, not instead of them.
+`codeanchor` checks whether your repository agrees with itself. It flags README commands that no longer exist, CI versions that disagree with runtime pins, and code that changed under an untouched comment. It also uses Git history to find frequently changed files with missing tests or ownership.
+
+See [companion tools](docs/companion-tools.md) for workflow validation, link checking, secret scanning, and other checks to run alongside CodeAnchor.
 
 ---
 
@@ -120,7 +122,6 @@ Full rule reference with per-rule details: [docs/rules.md](docs/rules.md).
 | CA-CI001 | GitHub Actions workflow references a missing npm script                | `repo`, `pr` | error   |
 | CA-CI002 | `setup-node` version doesn't match `.nvmrc` or `engines.node`          | `repo`, `pr` | warn    |
 | CA-CI003 | GitHub Actions workflow references a local path that doesn't exist     | `repo`, `pr` | error   |
-| CA-CI004 | Workflow uses unpinned action ref instead of full commit SHA           | `repo`, `pr` | warn    |
 | CA-CI005 | Workflow `needs:` references a job that doesn't exist in the same file | `repo`, `pr` | error   |
 
 ### Docker
@@ -130,9 +131,7 @@ Full rule reference with per-rule details: [docs/rules.md](docs/rules.md).
 | CA-DOCKER001  | Dockerfile `COPY`/`ADD` references a source path that doesn't exist                 | `repo`, `pr` | warn    |
 | CA-DOCKER002  | Dockerfile `RUN`/`CMD`/`ENTRYPOINT` references a missing script or file             | `repo`, `pr` | warn    |
 | CA-DOCKER003  | Dockerfile `FROM` version doesn't match `.nvmrc`/`engines.node`/`go.mod`            | `repo`, `pr` | warn    |
-| CA-DOCKER004  | Dockerfile sets a credential-named `ENV`/`ARG` with a hardcoded default             | `repo`, `pr` | error   |
 | CA-DOCKER005  | Dockerfile exists but `.dockerignore` is missing or doesn't exclude sensitive paths | `repo`, `pr` | error   |
-| CA-COMPOSE001 | Docker Compose `depends_on`/`volumes`/`networks` reference an undeclared name       | `repo`, `pr` | error   |
 | CA-COMPOSE002 | Docker Compose `env_file` or `build.dockerfile` references a missing path           | `repo`, `pr` | error   |
 
 ### Package / npm
@@ -153,7 +152,6 @@ Full rule reference with per-rule details: [docs/rules.md](docs/rules.md).
 | ID         | Description                                                                 | Mode         | Default |
 | ---------- | --------------------------------------------------------------------------- | ------------ | ------- |
 | CA-DOCS001 | README/docs reference a missing npm script                                  | `repo`, `pr` | error   |
-| CA-DOCS002 | README/docs have a broken relative Markdown link                            | `repo`, `pr` | error   |
 | CA-DOCS004 | README/docs reference a hardcoded version that doesn't match `package.json` | `repo`, `pr` | warn    |
 
 ### Environment & secrets
@@ -213,7 +211,6 @@ Full details and language support for each rule: [docs/rules.md — ISO quality 
 
 | ID         | Description                                                                                     | Mode         | Default |
 | ---------- | ----------------------------------------------------------------------------------------------- | ------------ | ------- |
-| ISO-MAI001 | Circular import between modules                                                                 | `repo`, `pr` | error   |
 | ISO-MAI002 | File exports too many public symbols — low cohesion (configurable threshold)                    | `repo`, `pr` | warn    |
 | ISO-MAI003 | Module has high afferent coupling — too many internal files import it                           | `repo`, `pr` | info    |
 | ISO-MAI004 | Source file has no test counterpart (audits all source files; CA-TEST001 audits only hot files) | `repo`, `pr` | info    |
@@ -258,7 +255,6 @@ To disable the entire ISO family:
 ```json
 {
     "rules": {
-        "ISO-MAI001": false,
         "ISO-MAI002": false,
         "ISO-MAI003": false,
         "ISO-MAI004": false,
@@ -350,7 +346,6 @@ Full config reference with all rule options: [docs/config.md](docs/config.md).
     "rules": {
         "CA-CD001": { "severity": "error", "maxOwnershipDistance": 20 },
         "CA-DOCS001": { "severity": "error" },
-        "CA-DOCS002": { "severity": "error" },
         "CA-CI001": { "severity": "error" },
         "CA-DOCKER001": { "severity": "warn" },
         "CA-PKG001": { "severity": "error" },
@@ -398,7 +393,7 @@ Use `--fail-on-warn` to exit 1 on warnings too.
 
 ## Companion ESLint plugin
 
-[`@farisabujolban/eslint-plugin-codeanchor`](https://github.com/farisabujolban/eslint-plugin-codeanchor) covers AST-level single-file checks that this CLI cannot: issue-linked TODOs, expired comment deadlines, hardcoded credentials in assignments, insecure `Math.random()` usage, `JSON.parse()` without try/catch, and more. Run both for full coverage.
+[`@farisabujolban/eslint-plugin-codeanchor`](https://github.com/farisabujolban/eslint-plugin-codeanchor) checks JS/TS policies such as linking TODOs to issues, giving workarounds a removal condition, and documenting environment variables in an example file.
 
 ```bash
 npm install --save-dev @farisabujolban/eslint-plugin-codeanchor

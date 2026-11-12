@@ -1,5 +1,7 @@
 # codeanchor — Setup Guide
 
+See [companion tools](companion-tools.md) for checks to run as separate tasks alongside CodeAnchor.
+
 How to integrate `codeanchor` into pre-commit hooks, CI pipelines, and scheduled maintenance runs.
 
 ← [Back to README](../README.md)
