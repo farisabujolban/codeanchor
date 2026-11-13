@@ -1,6 +1,6 @@
 # codeanchor — Rule Reference
 
-Full reference for all 55 rules. Each entry lists the description, applicable scan modes, default severity, and any configurable options.
+Rule descriptions, scan modes, severity, and options. Run `codeanchor rules` for the complete list in your installed version. For removed rules and their replacements, see [companion tools](companion-tools.md).
 
 ← [Back to README](../README.md)
 
@@ -107,19 +107,6 @@ Detects when a named export is removed from a file that looks like a public inde
 
 ---
 
-#### CA-CI004
-
-**Workflow uses unpinned action ref instead of a full commit SHA.**
-
-Pinning to a full SHA (e.g., `actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683`) prevents supply chain attacks from mutable tags like `@v4`.
-
-|                  |              |
-| ---------------- | ------------ |
-| Mode             | `repo`, `pr` |
-| Default severity | warn         |
-
----
-
 #### CA-CI005
 
 **Workflow `needs:` references a job that doesn't exist in the same file.**
@@ -170,31 +157,9 @@ Detects version drift between the base image and the version declared in the pro
 
 ---
 
-#### CA-DOCKER004
-
-**Dockerfile sets a credential-named `ENV`/`ARG` with a hardcoded non-empty default.**
-
-|                  |              |
-| ---------------- | ------------ |
-| Mode             | `repo`, `pr` |
-| Default severity | error        |
-
----
-
 #### CA-DOCKER005
 
 **Dockerfile exists but `.dockerignore` is missing or doesn't exclude sensitive paths.**
-
-|                  |              |
-| ---------------- | ------------ |
-| Mode             | `repo`, `pr` |
-| Default severity | error        |
-
----
-
-#### CA-COMPOSE001
-
-**Docker Compose `depends_on`, `volumes`, or `networks` reference an undeclared name.**
 
 |                  |              |
 | ---------------- | ------------ |
@@ -319,19 +284,6 @@ Checks for a `files` field or `.npmignore`. Without one, `npm publish` ships eve
 **README/docs reference a missing npm script.**
 
 Checks `README.md` and all files under `docs/` for backtick-enclosed script invocations (`npm run`, `pnpm`, `yarn`) that reference a script name not present in `package.json`.
-
-|                  |              |
-| ---------------- | ------------ |
-| Mode             | `repo`, `pr` |
-| Default severity | error        |
-
----
-
-#### CA-DOCS002
-
-**README/docs have a broken relative Markdown link.**
-
-Checks `README.md` and all files under `docs/` for relative Markdown links (those beginning with `./` or `../`) pointing to files that don't exist on disk.
 
 |                  |              |
 | ---------------- | ------------ |
@@ -594,19 +546,6 @@ See [README — ISO quality checks](../README.md#iso-quality-checks) for opt-out
 ---
 
 ### ISO-MAI — Maintainability
-
----
-
-#### ISO-MAI001
-
-**Circular import between modules.**
-
-Detects import cycles between JS/TS modules (relative imports) and Python relative imports. Circular dependencies make modules hard to test and understand.
-
-|                  |              |
-| ---------------- | ------------ |
-| Mode             | `repo`, `pr` |
-| Default severity | error        |
 
 ---
 

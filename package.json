@@ -42,13 +42,13 @@
     },
     "dependencies": {
         "commander": "^15.0.0",
-        "js-yaml": "^4.1.1"
+        "js-yaml": "^4.3.2"
     },
     "devDependencies": {
         "@commitlint/cli": "^21.0.2",
         "@commitlint/config-conventional": "^21.0.2",
-        "@farisabujolban/eslint-plugin-codeanchor": "^0.2.0",
-        "@release-it/conventional-changelog": "^11.0.1",
+        "@farisabujolban/eslint-plugin-codeanchor": "0.2.0",
+        "@release-it/conventional-changelog": "^12.0.2",
         "@types/js-yaml": "^4.0.9",
         "@types/node": "^22.0.0",
         "@vitest/coverage-v8": "^4.1.8",
@@ -56,9 +56,14 @@
         "husky": "^9.0.0",
         "lint-staged": "^15.0.0",
         "prettier": "^3.0.0",
-        "release-it": "^20.2.0",
+        "release-it": "^21.1.2",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.0.0",
         "vitest": "^4.1.8"
+    },
+    "overrides": {
+        "get-uri@8.0.1": {
+            "basic-ftp": "^6.2.4"
+        }
     }
 }

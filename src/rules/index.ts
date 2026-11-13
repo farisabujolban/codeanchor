@@ -1,14 +1,12 @@
 import { caCd001 } from './ca-cd001.js';
 import { caDocs001 } from './ca-docs001.js';
-import { caDocs002 } from './ca-docs002.js';
 import { caDocs004 } from './ca-docs004.js';
 import { caCi001 } from './ca-ci001.js';
 import { caCi002 } from './ca-ci002.js';
 import { caCi003 } from './ca-ci003.js';
-import { caCi004 } from './ca-ci004.js';
+import { caCi005 } from './ca-ci005.js';
 import { caDocker001 } from './ca-docker001.js';
 import { caDocker002 } from './ca-docker002.js';
-import { caDocker004 } from './ca-docker004.js';
 import { caPkg001 } from './ca-pkg001.js';
 import { caPkg002 } from './ca-pkg002.js';
 import { caLock001 } from './ca-lock001.js';
@@ -26,7 +24,6 @@ import { caChangelog001 } from './ca-changelog001.js';
 import { caMigration001 } from './ca-migration001.js';
 import { caDocker003 } from './ca-docker003.js';
 import { caMono001 } from './ca-mono001.js';
-import { caCompose001 } from './ca-compose001.js';
 import { caPkg003 } from './ca-pkg003.js';
 import { caConfig001 } from './ca-config001.js';
 import { caI18n001 } from './ca-i18n001.js';
@@ -40,9 +37,7 @@ import { caPublish001 } from './ca-publish001.js';
 import { caDocker005 } from './ca-docker005.js';
 import { caEnv003 } from './ca-env003.js';
 import { caPkg004 } from './ca-pkg004.js';
-import { caCi005 } from './ca-ci005.js';
 import { caCompose002 } from './ca-compose002.js';
-import { isoMai001 } from './iso-mai001.js';
 import { isoMai002 } from './iso-mai002.js';
 import { isoRel001 } from './iso-rel001.js';
 import { isoRel002 } from './iso-rel002.js';
@@ -60,25 +55,20 @@ import { caLock002 } from './ca-lock002.js';
 import { caPkg006 } from './ca-pkg006.js';
 import { caEnv004 } from './ca-env004.js';
 import { caMigration003 } from './ca-migration003.js';
-import { caCi007 } from './ca-ci007.js';
-import { caCi006 } from './ca-ci006.js';
 import { caDocker008 } from './ca-docker008.js';
 import { caTsconfig003 } from './ca-tsconfig003.js';
-import { caOpenapi002 } from './ca-openapi002.js';
 import type { Rule } from '../types.js';
 
 export const allRules: Rule[] = [
     caCd001,
     caDocs001,
-    caDocs002,
     caDocs004,
     caCi001,
     caCi002,
     caCi003,
-    caCi004,
+    caCi005,
     caDocker001,
     caDocker002,
-    caDocker004,
     caPkg001,
     caPkg002,
     caLock001,
@@ -96,7 +86,6 @@ export const allRules: Rule[] = [
     caMigration001,
     caDocker003,
     caMono001,
-    caCompose001,
     caPkg003,
     caConfig001,
     caI18n001,
@@ -110,9 +99,7 @@ export const allRules: Rule[] = [
     caDocker005,
     caEnv003,
     caPkg004,
-    caCi005,
     caCompose002,
-    isoMai001,
     isoMai002,
     isoRel001,
     isoRel002,
@@ -130,9 +117,6 @@ export const allRules: Rule[] = [
     caPkg006,
     caEnv004,
     caMigration003,
-    caCi007,
-    caCi006,
     caDocker008,
     caTsconfig003,
-    caOpenapi002,
 ];

@@ -16,7 +16,6 @@ const DEFAULTS: CodeAnchorConfig = {
     rules: {
         'CA-CD001': { severity: 'error', maxOwnershipDistance: 20 },
         'CA-DOCS001': { severity: 'error' },
-        'CA-DOCS002': { severity: 'error' },
         'CA-DOCS003': { severity: 'warn' },
         'CA-CI001': { severity: 'error' },
         'CA-CI003': { severity: 'error' },
@@ -30,7 +29,6 @@ const DEFAULTS: CodeAnchorConfig = {
         'CA-OWN001': { severity: 'warn' },
         'CA-TODO003': { severity: 'warn' },
         'ISO-MAI002': { severity: 'warn' },
-        'ISO-MAI001': { severity: 'error' },
         'ISO-REL001': { severity: 'warn' },
     },
 };
